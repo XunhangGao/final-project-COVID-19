@@ -1,0 +1,15 @@
+library(shiny)
+library(DT)
+library(plotly)
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(coronavirus)
+library(reshape2)
+library(shinydashboard)
+library(shinyWidgets)
+
+source("app_ui.R")
+source("app_server.R")
+
+shinyApp(ui = ui, server = server)

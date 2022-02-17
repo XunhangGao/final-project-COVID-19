@@ -1,0 +1,101 @@
+---
+title: "COVID-19 Report Group Project"
+author: "Wenhui Gong, Jiani Zhu, David Gao, Yuqi Wang"
+date: "11/22/2021"
+output: html_document
+---
+
+
+```{r load-packages, include=FALSE}
+library(dplyr)
+library(magrittr)
+library(knitr)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r setup, include=FALSE}
+source("Exploratory_Summary.R")
+source("Exploratory_Chart1.R")
+source("Exploratory_Table.R")
+source("Exploratory_Chart2.R")
+source("Exploratory_Chart3.R")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Introduction
+
+COVID-19 is a sudden global pandemic that has affected the lives of people around the world, including us. Thus we're looking at one of the most important things that's happening in the world, looking at this outbreak from a data point of view. Each of our group members will focus on one particular problem related to COVID-19 and analyze datasets corresponding to our topics, namely: quarantine, vaccine development, transportation and unemployment.
+
+
+### Summary Information
+
+  - We all know quarantine is an essential part of COVID-19 and everyone has experienced quarantine as a demand from countries' government. In the future analysis of COVID-19 quarantine in this project, we will be focusing on the quarantine level required by the government of `r summary_info$q_country_number` countries. The latest quarantine requirements are updated on `r summary_info$q_latest_day`. In our dataset, we can see the latest quarantine level by the US government made on `r summary_info$q_us_latest` is level  `r summary_info$q_us_latest_level` which indicates the government recommend not leaving house. 
+  
+  - After the outbreak of COVID-19, the development of vaccines has been one of the top concerns. There are now several types of vaccines available, and it is highly recommended to take COVID vaccine before we go somewhere else to protect ourselves. Now the global vaccination rate is `r summary_info$global_vaccination_rate`, which counts the ratio of the number of people who got at least one shot.
+  
+  - Transportation was seriously influenced by COVID-19 since 2020. This project will focus on how the number of trips made by residents in U.S is impacted. From the data, if ignore the distances of trips, the average number of trips by residents per day in 2019is `r avg_numb_trips_2019`, and the average population staying at home in 2019 is `r avg_numb_home_2019`. The average number of trips by residents per day in 2020 is `r avg_numb_trips_2020`, and the average population staying at home in 2020 is `r avg_numb_home_2020`. The numbers of trips within 10 miles and more than 10 miles have decreased from `r trips_10miles_2019` and `r trips_500miles_2019` in 2019 to `r trips_10miles_2020` and `r trips_500miles_2020` in 2020. And obviously, the number of population staying at home increased while the number of trips decreased dramatically, which means more people choose to stay at home and reduced the number of trips due to COVID-19.
+  
+  - It is clear that employment and workforce is one area that has been severely impacted due to the outbreak of COVID. From the overall statistics of countries and regions from 1991 to 2020, we could compute the overall range of the change in unemployment rates  of all countries and regions listed in the dataset. Out of the 235 countries/regions in the dataset, **all** of them (`r summary_info$unemploy_rise`) experiences an increase in the unemployment rate. For the United States, there is a increase of `r summary_info$unemploy_us`% in unemployment rates. We can also identify the country/region with highest and lowest increase in unemployment rates, which are `r summary_info$unemploy_max` and `r summary_info$unemploy_min` respectively.
+
+### Aggregate Table
+
+Here is a table that shows the accumulated number of people that got at least one shot of COVID vaccine and the ratio of the number of people getting vaccinated in each country in descending order. This can also help us to see which country is much safer to travel to. The existing types of vaccine are not 100% effective at preventing infection, but as more people got vaccinated, the risk of getting COVID-19 will be reduced. 
+
+```{r echo=FALSE}
+table
+```
+
+
+### Chart1
+
+ - In order to know the relationship between COVID-19 and quarantine, we have to check the quarantine level required by the government during a tension period of COVID-19 in each country. In this chart we will see a map shows the quarantine level of `r summary_info$q_country_number` countries on the day that the US had the highest new cases, which is Jan.8,2021. Let's see what's the quarantine level required by the US government and other countries on Jan.8,2021. This map might tell us how acquiring quarantine affect the new cases. 
+ 
+ - There are four levels of stay_home_requirements measured for countries: 
+ 
+    
+    - 0 - No measures
+  
+    - 1 - recommend not leaving house
+  
+    - 2 - require not leaving house with exceptions for daily exercise, grocery shopping, and ‘essential’ trips
+  
+    - 3 - Require not leaving house with minimal exceptions (e.g. allowed to leave only once every few days, or only one person can leave at a time, etc.)
+
+  - In the map below, we can see the stay_home_requirements for the US is Level 2 on Jan.08.2021 which implies the government require not leaving house with exceptions for daily exercise, grocery shopping, and ‘essential’ trips. Thus we can see the US government was trying to eliminate outdoor activities as much as possible when we have the highest cases. We also can see countries like China and Pakistan required Level 3 quarantine which only allows minimal exception of leaving house, this can reveal more when we relate this map with COVID-19 new cases data on Jan.08.2021.You can interact with the map below.  
+
+```{r echo=FALSE, fig.width = 10, fig.height = 6}
+quarantine_map
+```
+
+
+### Chart2
+
+In order to investigate the influences on numbers of trips by residents brought by epidemic, we need to compare the patterns before and after the spread of COVID-19.
+The data involves in this plot is divided into tow two groups, data for 2019 form 2019-01-01 to 2019-12-21 and data fro 2020 from 2020-01-31 to 2020-12-31, where as data of 2019 represents pattern before COVID-19 and data 2020 represents patterns during COVID-19. Form the plot, it is obvious to notice that the number of trips, ignore the distances of trips, by residents started to decreases after the February, which the beginning of COVID-19 and finally led to a great difference on patterns between 2020 and 2019. This data presents that more people tends to travel less after spread of COVID-19.
+
+```{r echo=FALSE, fig.width = 10, fig.height = 6}
+active_num_trips
+```
+
+### Chart3
+
+In this line chart of several selected countries/regions and their unemployment rate from the year 2010 to 2020, we can see generally decreasing trends of most countries/regions throughout the years 2010 to 2019, with the exception of South Africa and Latin America & Caribbean. However, it
+is clearly observable that all countries and regions, whether or not they are in a decreasing trend of unemployment, has taken a **sharp rise** during the year 2019 to 2020 due to the outbreak of COVID19. Some of the most sharp turns we can identify include the United States, Latin America & Caribbean, and South Asia.
+
+```{r echo=FALSE, fig.width = 10, fig.height = 6}
+unemployment_chart
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
